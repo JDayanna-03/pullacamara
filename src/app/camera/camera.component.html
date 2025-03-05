@@ -1,0 +1,17 @@
+<div class="camera-container">
+    <img [src]="imgUrl" alt="Captured Image" class="captured-image" *ngIf="imgUrl">
+    
+    <div class="placeholder" *ngIf="!imgUrl && !loading">
+        <div class="placeholder-icon">📷</div>
+        <div class="placeholder-text">No hay imagen capturada</div>
+    </div>
+
+    <button (click)="takePicture()" class="take-picture-button" [disabled]="loading">
+        <span *ngIf="!loading">📷 Toma una Foto</span>
+        <span *ngIf="loading"><span class="loading-spinner">⟳</span> Cargando...</span>
+    </button>
+
+    <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+    </div>
+</div>
