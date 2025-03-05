@@ -1,15 +1,45 @@
 <div class="camera-container">
-    <img [src]="imgUrl" alt="Captured Image" class="captured-image" *ngIf="imgUrl">
+    <img [src]="imgUrl" alt="Captured Image" class="captured-image" *ngIf="imgUrl && !showGallery">
     
-    <div class="placeholder" *ngIf="!imgUrl && !loading">
+    <div class="placeholder" *ngIf="!imgUrl && !loading && !showGallery">
         <div class="placeholder-icon">📷</div>
         <div class="placeholder-text">No hay imagen capturada</div>
     </div>
 
-    <button (click)="takePicture()" class="take-picture-button" [disabled]="loading">
-        <span *ngIf="!loading">📷 Toma una Foto</span>
-        <span *ngIf="loading"><span class="loading-spinner">⟳</span> Cargando...</span>
-    </button>
+    <div class="gallery-container" *ngIf="showGallery">
+        <h3>Galería de Fotos</h3>
+        <div class="gallery-grid">
+            <div class="gallery-item" *ngFor="let photo of savedPhotos; let i = index" (click)="selectPhoto(photo)">
+                <img [src]="photo" alt="Foto guardada" class="gallery-image">
+                <div class="gallery-actions">
+                    <button class="delete-button" (click)="deletePhoto(i, $event)">🗑️</button>
+                </div>
+            </div>
+            <div *ngIf="savedPhotos.length === 0" class="empty-gallery">
+                No hay fotos guardadas
+            </div>
+        </div>
+        <button (click)="showGallery = false" class="gallery-back-button">Volver a la cámara</button>
+    </div>
+
+    <div class="button-container" *ngIf="!showGallery">
+        <button (click)="takePictureFromCamera()" class="take-picture-button" [disabled]="loading">
+            <span *ngIf="!loading">📷 Tomar Foto</span>
+            <span *ngIf="loading"><span class="loading-spinner">⟳</span> Cargando...</span>
+        </button>
+        
+        <button (click)="takePictureFromGallery()" class="gallery-button" [disabled]="loading">
+            <span>🖼️ Elegir de Galería</span>
+        </button>
+        
+        <button *ngIf="imgUrl" (click)="savePhoto()" class="save-button" [disabled]="loading">
+            <span>💾 Guardar Foto</span>
+        </button>
+        
+        <button (click)="showGallery = true" class="view-gallery-button">
+            <span>📁 Ver Galería</span>
+        </button>
+    </div>
 
     <div *ngIf="errorMessage" class="error-message">
         {{ errorMessage }}

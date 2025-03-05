@@ -5,6 +5,9 @@
     justify-content: center;
     min-height: 400px;
     padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .captured-image {
@@ -39,10 +42,23 @@
     color: #999;
 }
 
-.take-picture-button {
+/* Contenedor de botones */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Estilos para todos los botones */
+.take-picture-button,
+.gallery-button,
+.save-button,
+.view-gallery-button,
+.gallery-back-button {
     padding: 12px 24px;
     font-size: 16px;
-    background-color: #673ab7;
     color: white;
     border: none;
     border-radius: 5px;
@@ -50,13 +66,62 @@
     transition: all 0.3s ease;
 }
 
-.take-picture-button:hover {
-    background-color: #7e57c2;
+.take-picture-button {
+    background-color: #673ab7;
+}
+
+.gallery-button {
+    background-color: #3f51b5;
+}
+
+.save-button {
+    background-color: #009688;
+}
+
+.view-gallery-button {
+    background-color: #ff5722;
+}
+
+.gallery-back-button {
+    background-color: #607d8b;
+    margin-top: 15px;
+}
+
+/* Efectos hover para todos los botones */
+.take-picture-button:hover,
+.gallery-button:hover,
+.save-button:hover,
+.view-gallery-button:hover,
+.gallery-back-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.take-picture-button:disabled {
+.take-picture-button:hover {
+    background-color: #7e57c2;
+}
+
+.gallery-button:hover {
+    background-color: #5c6bc0;
+}
+
+.save-button:hover {
+    background-color: #00bfa5;
+}
+
+.view-gallery-button:hover {
+    background-color: #ff7043;
+}
+
+.gallery-back-button:hover {
+    background-color: #78909c;
+}
+
+/* Estilos para botones deshabilitados */
+.take-picture-button:disabled,
+.gallery-button:disabled,
+.save-button:disabled,
+.view-gallery-button:disabled {
     background-color: #555;
     cursor: not-allowed;
     transform: none;
@@ -66,6 +131,7 @@
 .loading-spinner {
     animation: spin 1s linear infinite;
     display: inline-block;
+    margin-right: 8px;
 }
 
 .error-message {
@@ -77,9 +143,117 @@
     border-left: 3px solid #ff6b6b;
     max-width: 300px;
     text-align: center;
+    width: 100%;
+}
+
+/* Estilos para la galería */
+.gallery-container {
+    width: 100%;
+}
+
+.gallery-container h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #e0e0e0;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    aspect-ratio: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 5px;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.gallery-item:hover .gallery-actions {
+    opacity: 1;
+}
+
+.delete-button {
+    background-color: rgba(255, 107, 107, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete-button:hover {
+    background-color: rgba(255, 107, 107, 1);
+    transform: scale(1.1);
+}
+
+.empty-gallery {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 30px 0;
+    color: #999;
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    border: 2px dashed #555;
+    font-style: italic;
 }
 
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .camera-container {
+        padding: 15px;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .button-container {
+        gap: 8px;
+    }
+    
+    .take-picture-button, 
+    .gallery-button, 
+    .save-button, 
+    .view-gallery-button, 
+    .gallery-back-button {
+        padding: 10px;
+        font-size: 14px;
+    }
 }
